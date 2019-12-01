@@ -16,11 +16,18 @@
           <div>
             <label class="typo__label">Select Audio Input Device</label>
             <multiselect v-model="valueAudio" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select one" :options="audioOptions" :searchable="true" :allow-empty="false"  @select="dispatchAction(valueAudio)">
+              placeholder="Select one" :options="audioOptions" :searchable="true" :allow-empty="false"  >
               <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
             </multiselect>
           </div>
         </div>
+        </v-col>
+        <v-col>
+           <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag.
+          </audio>
         </v-col>
       </v-row>
       <v-row>
@@ -29,14 +36,14 @@
           <div>
             <label class="typo__label">Select Video Input Device</label>
             <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select one" :options="videoOptions" :searchable="true" :allow-empty="false">
+              placeholder="Select one" :options="videoOptions" :searchable="true" :allow-empty="false" >
               <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
             </multiselect>
           </div>
         </div>
         </v-col>
         <v-col>
-              <video autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;"></video>
+          <video autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="fikurivid"></video>
         </v-col>
       </v-row>
       <v-row>  
@@ -50,6 +57,13 @@
             </multiselect>
           </div>
         </div>
+        </v-col>
+        <v-col>
+          <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag.
+          </audio>
         </v-col>
       </v-row>
       <v-row>
@@ -67,10 +81,7 @@
       </v-row>      
       </v-container>
     </v-content>
-    <v-footer
-      color="indigo"
-      app
-    >
+    <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
     </v-footer>
   </v-app>
@@ -87,19 +98,28 @@ export default {
   },
   data () {
     return {
-      valueAudio: null,
-      valueVideo: null,
-      valueSpeaker: null,
+      valueAudio: "",
+      valueVideo: "",
+      valueSpeaker: "",
       valueOthers: null,
       audioOptions: [],
       videoOptions:[],
       speakerOptions:[],
-      otherOptions:[]
+      otherOptions:[],
+     
     }
   },
   mounted(){
     var test = []
     this.initDevices()
+  },
+   watch: {
+    valueVideo: function (newValueVideo) {
+      this.dispatchAction(newValueVideo);
+    },
+    valueAudio: function (newValueAudio) {
+      this.dispatchAction(newValueAudio);
+    }
   },
   methods:{
     initDevices(){
@@ -119,12 +139,17 @@ export default {
       })
     },
     dispatchAction(value){
-    
-    // navigator.mediaDevices.getUserMedia({
-    //         video: value.
-    //     }).then(function(stream) {
-    //         video.srcObject = stream;
-    //     });
+      var that = this;
+      // var  video =  document.querySelector('video'),
+      // console.log(this.$refs);
+      // console.log(this.video);
+      navigator.mediaDevices.getUserMedia({
+          video: value.deviceId
+      }).then(function(stream) {
+        // console.log(stream);
+        console.log(that.$refs)
+          that.$refs.fikurivid.srcObject = stream;
+      });
     }
   }
 
