@@ -148,11 +148,18 @@ export default {
       } else if (state === 'audioinput') {
 
       } else if (state === 'audiooutput') {
+        const audio = that.$refs.speakerValue;
         try{
-          const audio = that.$refs.speakerValue;
-          console.log(audio)
-          await audio.setSinkId(value.deviceId);
-          console.log('Audio is being played on ' + audio.sinkId);
+          navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(function(stream) {
+            
+          })
+          .catch(function(err) {
+            console.log('No mic for you!')
+          });
+            await audio.setSinkId(value.deviceId);
+            console.log('Audio is being played on ' + audio.sinkId);
+          
         } catch(e){
           alert("something error in your device");
           console.log(e);
