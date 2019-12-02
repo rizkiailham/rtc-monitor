@@ -1,15 +1,11 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar
-      app
-      color="indigo"
-      dark
-    >
+    <v-app-bar app color="indigo" dark>
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <v-container fluid >
+      <v-container fluid>
       <v-row>
         <v-col>
         <div class="inputSelect">
@@ -23,8 +19,8 @@
         </div>
         </v-col>
         <v-col>
-           <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
+          <audio controls ref="audioValue">
+            <source src="/audio/horse.ogg" type="audio/ogg">
             <source src="horse.mp3" type="audio/mpeg">
             Your browser does not support the audio tag.
           </audio>
@@ -43,7 +39,7 @@
         </div>
         </v-col>
         <v-col>
-          <video autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="fikurivid"></video>
+          <video autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="videoInput"></video>
         </v-col>
       </v-row>
       <v-row>  
@@ -59,8 +55,8 @@
         </div>
         </v-col>
         <v-col>
-          <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
+          <audio controls ref="speakerValue">
+            <source src="/audio/horse.ogg" type="audio/ogg">
             <source src="horse.mp3" type="audio/mpeg">
             Your browser does not support the audio tag.
           </audio>
@@ -106,23 +102,26 @@ export default {
       videoOptions:[],
       speakerOptions:[],
       otherOptions:[],
-     
+    
     }
   },
   mounted(){
     var test = []
     this.initDevices()
   },
-   watch: {
+  watch: {
     valueVideo: function (newValueVideo) {
-      this.dispatchAction(newValueVideo);
+      this.dispatchAction(newValueVideo, 'videoinput');
     },
     valueAudio: function (newValueAudio) {
-      this.dispatchAction(newValueAudio);
+      this.dispatchAction(newValueAudio, 'audioinput');
+    },
+    valueSpeaker: function (newValueSpeaker) {
+      this.dispatchAction(newValueSpeaker, 'audiooutput');
     }
   },
-  methods:{
-    initDevices(){
+  methods: {
+    initDevices() {
       let that = this;
       RTC.load(function() {
           RTC.MediaDevices.map(function(device) {
@@ -138,18 +137,22 @@ export default {
           })
       })
     },
-    dispatchAction(value){
+    async dispatchAction(value, state) {
       var that = this;
-      // var  video =  document.querySelector('video'),
-      // console.log(this.$refs);
-      // console.log(this.video);
-      navigator.mediaDevices.getUserMedia({
-          video: value.deviceId
-      }).then(function(stream) {
-        // console.log(stream);
-        console.log(that.$refs)
-          that.$refs.fikurivid.srcObject = stream;
-      });
+      if (state === 'videoinput') {
+        navigator.mediaDevices.getUserMedia({
+            video: value.deviceId
+        }).then(function(stream) {
+            that.$refs.videoInput.srcObject = stream;
+        });
+      } else if (state === 'audioinput') {
+
+      } else if (state === 'audiooutput') {
+        const audio = that.$refs.speakerValue;
+        console.log(audio)
+        await audio.setSinkId(value.deviceId);
+        console.log('Audio is being played on ' + audio.sinkId);
+      } 
     }
   }
 
