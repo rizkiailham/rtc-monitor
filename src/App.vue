@@ -63,6 +63,11 @@
         </v-col>
       </v-row>
       <v-row>
+      <h4> 
+        {{ detailsDebug }}
+      </h4>
+      </v-row>
+      <v-row>
         <v-col>
         <div class="inputSelect">
           <div>
@@ -102,11 +107,10 @@ export default {
       videoOptions:[],
       speakerOptions:[],
       otherOptions:[],
-    
+      detailsDebug: ""
     }
   },
   mounted(){
-    var test = []
     this.initDevices()
   },
   watch: {
@@ -140,10 +144,14 @@ export default {
     async dispatchAction(value, state) {
       var that = this;
       if (state === 'videoinput') {
-        navigator.mediaDevices.getUserMedia({
-            video: value.deviceId
-        }).then(function(stream) {
-            that.$refs.videoInput.srcObject = stream;
+        const video = that.$refs.videoInput;
+        navigator.mediaDevices.getUserMedia({ video: {
+              deviceId: { exact: value.deviceId }
+        }
+        })
+        .then(function(stream) {
+
+            video.srcObject = stream;
         });
       } else if (state === 'audioinput') {
 
@@ -152,7 +160,7 @@ export default {
         try{
           navigator.mediaDevices.getUserMedia({ audio: true })
           .then(function(stream) {
-            
+            console.log(stream)
           })
           .catch(function(err) {
             console.log('No mic for you!')
