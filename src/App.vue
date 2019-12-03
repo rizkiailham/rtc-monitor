@@ -146,8 +146,10 @@ export default {
       if (state === 'videoinput') {
         const video = that.$refs.videoInput;
         navigator.mediaDevices.getUserMedia({ video: {
-              deviceId: { exact: value.deviceId }
-        }
+              deviceId: { exact: value.deviceId },
+              facingMode: "environment"
+
+        },
         })
         .then(function(stream) {
 
