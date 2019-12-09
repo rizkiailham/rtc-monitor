@@ -148,7 +148,6 @@ export default {
         navigator.mediaDevices.getUserMedia({ video: {
               deviceId: { exact: value.deviceId },
               facingMode: "environment"
-
         },
         })
         .then(function(stream) {
