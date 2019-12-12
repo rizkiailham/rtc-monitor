@@ -3,29 +3,8 @@
     <v-app-bar app color="indigo" dark>
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
-
     <v-content>
       <v-container fluid>
-      <v-row>
-        <v-col>
-        <div class="inputSelect">
-          <div>
-            <label class="typo__label">Select Audio Input Device</label>
-            <multiselect v-model="valueAudio" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select one" :options="audioOptions" :searchable="true" :allow-empty="false"  >
-              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-            </multiselect>
-          </div>
-        </div>
-        </v-col>
-        <v-col>
-          <audio controls ref="audioValue">
-            <source src="/audio/horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
-            Your browser does not support the audio tag.
-          </audio>
-        </v-col>
-      </v-row>
       <v-row>
         <v-col>
         <div class="inputSelect">
@@ -38,48 +17,10 @@
           </div>
         </div>
         </v-col>
-        <v-col>
-          <video autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="videoInput"></video>
-        </v-col>
       </v-row>
-      <v-row>  
-        <v-col>
-        <div class="inputSelect">
-          <div>
-            <label class="typo__label">Select audio Output Device</label>
-            <multiselect v-model="valueSpeaker" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select one" :options="speakerOptions" :searchable="true" :allow-empty="false">
-              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-            </multiselect>
-          </div>
-        </div>
-        </v-col>
-        <v-col>
-          <audio controls ref="speakerValue">
-            <source src="/audio/horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
-            Your browser does not support the audio tag.
-          </audio>
-        </v-col>
+      <v-row     align="center" justify="center">  
+          <video class="text-center" width="1280" height="700" autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="videoInput"></video>
       </v-row>
-      <v-row>
-      <h4> 
-        {{ detailsDebug }}
-      </h4>
-      </v-row>
-      <v-row>
-        <v-col>
-        <div class="inputSelect">
-          <div>
-            <label class="typo__label">Select Other Device</label>
-            <multiselect v-model="valueOthers" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select one" :options="otherOptions" :searchable="true" :allow-empty="false">
-              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-            </multiselect>
-          </div>
-        </div>
-        </v-col>
-      </v-row>      
       </v-container>
     </v-content>
     <v-footer color="indigo" app>
@@ -146,14 +87,9 @@ export default {
       if (state === 'videoinput') {
         const video = that.$refs.videoInput;
         navigator.mediaDevices.getUserMedia({ video: {
-<<<<<<< HEAD
               deviceId: { exact: value.deviceId },
               facingMode: "environment"
         },
-=======
-              deviceId: { exact: value.deviceId }
-        }
->>>>>>> develop
         })
         .then(function(stream) {
 
