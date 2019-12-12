@@ -1,31 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app color="indigo" dark>
-      <v-toolbar-title>Application</v-toolbar-title>
-    </v-app-bar>
-    <v-content>
-      <v-container fluid>
-      <v-row>
-        <v-col>
-        <div class="inputSelect">
-          <div>
-            <label class="typo__label">Select Video Input Device</label>
-            <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select one" :options="videoOptions" :searchable="true" :allow-empty="false" >
-              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-            </multiselect>
-          </div>
-        </div>
-        </v-col>
-      </v-row>
-      <v-row     align="center" justify="center">  
-          <video class="text-center" width="1280" height="700" autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="videoInput"></video>
-      </v-row>
-      </v-container>
-    </v-content>
-    <v-footer color="indigo" app>
-      <span class="white--text">&copy; 2019</span>
-    </v-footer>
+    <router-view></router-view>
   </v-app>
 </template>
 
