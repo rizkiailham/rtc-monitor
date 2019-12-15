@@ -14,7 +14,7 @@
                   <v-toolbar flat  align="left" >
                     <v-toolbar-title  class="mr-4 ml-4 headline black--text">Preview </v-toolbar-title>
                           <v-toolbar-items>
-                            <v-btn text class="text-capitalize primary--text">
+                            <v-btn @mousedown="gotoFullScreen()" text class="text-capitalize primary--text">
                               <v-icon>mdi-fullscreen</v-icon>  
                               Fullscreen
                             </v-btn>
@@ -38,7 +38,10 @@
                   <v-divider></v-divider>
                   <v-card-text>
                       <v-layout row wrap>
-                        hello world
+                        <video ref="mainVideo" autoplay controls width="1800" height="700">
+                          <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
                       </v-layout>
                   </v-card-text>
                   
@@ -50,12 +53,34 @@
       </v-row>
     </v-flex>
     <v-footer class="elevation-3" color="white" height="100"  app>
-        <v-toolbar flat >
+      <v-layout row wrap  justify-end>
+        <v-flex class="pl-4 ml-4" xs3>
               <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-                placeholder="Select Video" :options="videoOptions" :searchable="true" :allow-empty="false" >
+                placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false" >
                 <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
               </multiselect>
-        </v-toolbar>
+          
+        </v-flex>
+        <v-flex class="pl-4 ml-4" xs3>
+              <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
+                placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false" >
+                <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
+              </multiselect>
+        </v-flex>
+        <v-flex class="text-right" xs3 end>
+          <v-btn  color="primary"> 
+            <v-icon> mdi-folder</v-icon>
+            save
+          </v-btn>
+        </v-flex>
+        <v-flex align="right" class="text-right">
+          <v-btn color="primary" text > 
+          <v-icon> mdi-close</v-icon>
+          </v-btn>
+            
+        </v-flex>
+      </v-layout>
+              
     </v-footer>
   </v-layout>
 </template>
@@ -72,14 +97,11 @@ export default {
   },
   data () {
     return {
-      valueAudio: "",
       valueVideo: "",
-      valueSpeaker: "",
-      valueOthers: null,
+      valueProgram: "",
       audioOptions: [],
       videoOptions:[],
-      speakerOptions:[],
-      otherOptions:[],
+      programOptions:[],
       detailsDebug: ""
     }
   },
@@ -96,8 +118,7 @@ export default {
       console.log("hadir")
         navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
           console.log("permission granted")
-        }).catch(function(e){
-          console.log(e);
+          that.initDevices()
         });
       }
     },
@@ -107,22 +128,34 @@ export default {
           RTC.MediaDevices.map(function(device) {
             if (device.kind === "videoinput") {
               that.videoOptions.push(device);
+              that.programOptions.push(device);
             } 
           })
       })
     },
-    hasGetUserMedia() {
-    return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia || navigator.msGetUserMedia);
-  }
-
-
+    gotoFullScreen(){
+      console.log()
+      var elem = this.$refs.mainVideo;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+          elem.msRequestFullscreen();
+        }
+      
+    }
   },
-  // watch: {
-  //   valueVideo: function (newValueVideo) {
-  //     this.dispatchAction(newValueVideo, 'videoinput');
-  //   },
-  // }
+  computed: {
+    valueVideo: function (newValueVideo) {
+      this.dispatchAction(newValueVideo, 'videoinput');
+    },
+    valueProgram:function (newValueVideo) {
+      this.dispatchAction(newValueVideo, 'videoinput')
+    }
+  }
 }
 </script>
 <style >
