@@ -17,22 +17,28 @@
 const Route = use('Route')
 const Helpers = use('Helpers')
 
-Route.on('/api/').render('welcome')
-  Route.post('/api/upload', async ({
-    request
-  }) => {
-  const backgroundPic = request.file('background', {
-    types: ['image'],
-    size: '24mb'
-  })
+Route.on('/api/').render('welcome');
 
-  await backgroundPic.move(Helpers.tmpPath('uploads'), {
-    name: 'CustomBackground.jpg',
-    overwrite: true
-  })
+Route.post('/api/upload/', async ({ request }) => {
+  try{
+    const backgroundPic = request.file('background', {
+      types: ['image'],
+      size: '24mb'
+    })
 
-  if (!backgroundPic.moved()) {
-    return backgroundPic.error()
+    await backgroundPic.move(Helpers.publicPath('uploads'), {
+      name: 'CustomBackground.jpg',
+      overwrite: true
+    })
+
+    if (!backgroundPic.moved()) {
+      return backgroundPic.error()
+    }
+    return 'File moved'
+  }catch(e){
+    console.log(e)
   }
-  return 'File moved'
-})
+});
+
+
+
