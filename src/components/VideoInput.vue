@@ -18,7 +18,8 @@
               <v-col sm="10" md="10" style="margin-top:-25px;">
                 <v-card class="elevation-4 ">
                   <v-toolbar flat align="left">
-                    <v-toolbar-title class="mr-4 ml-4 headline black--text">Preview </v-toolbar-title>
+                    <v-toolbar-title class="mr-4 ml-4 headline black--text">Preview
+                    </v-toolbar-title>
                     <v-toolbar-items>
                       <v-btn @mousedown="gotoFullScreen()" text class="text-capitalize primary--text">
                         <v-icon>mdi-fullscreen</v-icon>
@@ -28,15 +29,18 @@
                     <v-spacer />
                     <!-- 3 button -->
                     <v-toolbar-items>
-                        <v-btn class="btn" to="/background" text @click="activeBtn = 'btn1'" :class="{active: activeBtn === 'btn1'} ">
-                          <v-icon>mdi-image</v-icon>
-                          background
-                        </v-btn>
-                      <v-btn class="btn" to="/video-input" text @click="activeBtn = 'btn2'" :class="{active: activeBtn === 'btn2' }">
+                      <v-btn class="btn" to="/background" text @click="activeBtn = 'btn1'"
+                        :class="{active: activeBtn === 'btn1'} ">
+                        <v-icon>mdi-image</v-icon>
+                        background
+                      </v-btn>
+                      <v-btn class="btn active" to="/video-input" text @click="activeBtn = 'btn2'"
+                        :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
                         Video Input
                       </v-btn>
-                      <v-btn class="btn" to="/layout" text @click="activeBtn = 'btn3'" :class="{active: activeBtn === 'btn3' }">
+                      <v-btn class="btn" to="/layout" text @click="activeBtn = 'btn3'"
+                        :class="{active: activeBtn === 'btn3' }">
                         <v-icon>mdi-texture-box</v-icon>
                         layout
                       </v-btn>
@@ -59,40 +63,44 @@
         </v-flex>
       </v-row>
     </v-flex>
-    <!-- background -->
-    <v-footer class="elevation-3" color="white" height="100" app>
-      <v-layout row wrap justify-end>
-        <v-flex class="pl-4 ml-4" xs3>
+    <!-- footer -->
+    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
+      <div class="d-flex full-width">
+        <v-layout align-center>
+        <v-flex xs4 ml-8>
           <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
             placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
             <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
           </multiselect>
-        </v-flex>
-        <v-flex class="pl-4 ml-4" xs3>
-          <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
+          </v-flex>
+          <v-flex xs4 ml-8>
+           <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
             placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">
             <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
           </multiselect>
         </v-flex>
-        <v-flex class="text-right" xs3 end>
-          <v-btn color="primary">
-            <v-icon> mdi-folder</v-icon>
-            save
-          </v-btn>
-        </v-flex>
-        <v-flex align="right" class="text-right">
-          <v-btn color="primary" text>
-            <v-icon> mdi-close</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
+        </v-layout>
+        <div class="d-flex">
+          <v-layout align-center>
+            <v-flex class="mr-12">
+              <v-btn color="primary">
+                Set Program
+              </v-btn>
+              <v-btn class="ml-3" color="primary">
+                Set Background
+              </v-btn>
+            </v-flex>
+          </v-layout>
+          <div class="btn-close">
+            <v-icon x-large color="white">mdi-close</v-icon>
+          </div>
+        </div>
+      </div>
     </v-footer>
   </v-layout>
 </template>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-
-
 <script>
   import RTC from 'detectrtc'
   import Multiselect from 'vue-multiselect'
@@ -193,5 +201,20 @@
   .btn:hover {
     background-color: #1976D2;
     color: white !important;
+  }
+
+  .btn-close {
+    height: 100px;
+    width: 100px;
+    color: white;
+    border: none;
+    background-color: #1976D2 !important;
+    outline: none;
+    padding: 0px 0px;
+    margin: 0;
+    cursor: pointer;
+    text-decoration: none !important;
+    display: flex;
+    justify-content: center;
   }
 </style>
