@@ -50,10 +50,9 @@
                   <!-- Video player -->
                   <v-card-text>
                     <v-layout row wrap>
-                      <video ref="mainVideo" autoplay width="1800" height="700">
-                        <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
+                      <canvas class="ml-2" ref="c1" width="1580" height="700" style="z-index: 0;
+                      outline: black 2px solid; ">
+                      </canvas>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -69,7 +68,7 @@
         <v-layout align-center>
         <v-flex xs4 ml-8>
           <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false" @select="onSelect">
+            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false" >
             <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
           </multiselect>
           </v-flex>
@@ -144,7 +143,8 @@
         })
       },
       gotoFullScreen() {
-        var elem = this.$refs.mainVideo;
+        var elem = this.$refs.c1;
+
         if (elem.requestFullscreen) {
           elem.requestFullscreen();
         } else if (elem.mozRequestFullScreen) {
@@ -157,11 +157,58 @@
           /* IE/Edge */
           elem.msRequestFullscreen();
         }
+      },
+      startCapture(deviceId){
+      let c1 = this.$refs.c1
+      c1.width  = 1920; // in pixels
+      c1.height = 1080; // in pixels
+      let ctx = c1.getContext("2d");
+      let base_image = new Image();
+      base_image.onload = function(){
+        ctx.drawImage(base_image, 0, 0);
+      }
+        base_image.src = localStorage.getItem('backgroundConfig');
+      var mainSource = this.createVideo("mainSouce")
+      try {
+          navigator.mediaDevices.getUserMedia({
+            video: {
+              deviceId: { exact: deviceId },
+            },
+        }).then((cameraStream)=> {
+            mainSource.srcObject = cameraStream
+            mainSource.play()
+            this.startDrawToVideo(ctx, mainSource, 20, 20, 1280, 720)
+          });
+      } catch(err) {
+        console.error("Error: " + err);
       }
     },
+    createVideo(className){
+      this.HTMLVideoElement = function() {};
+      var videoElem = document.createElement('video')
+          videoElem.className =  className;
+          videoElem.muted = true;
+          videoElem.volume = 0;
+          videoElem.width =  1280;
+          videoElem.height =  720;
+      return videoElem;
+    },
+    startDrawToVideo(ctx,videoElem,x,y,w,h){
+      // ctx.drawImage(videoElem,5,5,260,125)
+      var i = window.setInterval(function() {
+        ctx.drawImage(videoElem,x,y,w,h)
+      },1)
+    },
+    stopCapture(){
+      var videoElem = this.$refs.mainVid
+      let tracks = videoElem.srcObject.getTracks();
+      tracks.forEach(track => track.stop());
+      videoElem.srcObject = null;
+    },
+    },
     watch: {
-    computedValueVideo: function (newValueVideo) {
-        this.dispatchAction(newValueVideo, 'videoinput');
+      valueVideo (newValueVideo) {
+        this.startCapture(newValueVideo.deviceId)
       },
 
     }
