@@ -50,7 +50,7 @@
                   <!-- Video player -->
                   <v-card-text>
                     <v-layout row wrap>
-                      <video ref="mainVideo" autoplay controls width="1800" height="700">
+                      <video ref="mainVideo" autoplay width="1800" height="700">
                         <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                       </video>
@@ -69,16 +69,10 @@
         <v-layout align-center>
         <v-flex xs4 ml-8>
           <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
+            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false" @select="onSelect">
             <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
           </multiselect>
           </v-flex>
-          <v-flex xs4 ml-8>
-           <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
-            placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">
-            <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-          </multiselect>
-        </v-flex>
         </v-layout>
         <div class="d-flex">
           <v-layout align-center>
@@ -111,7 +105,6 @@
     data() {
       return {
         valueVideo: "",
-        valueProgram: "",
         audioOptions: [],
         videoOptions: [],
         programOptions: [],
@@ -125,6 +118,7 @@
     methods: {
       openDrawer() {
         console.log("drawer open")
+        console.log(this.$store.state);
       },
       dispatchAction(value, state) {
         var that = this;
@@ -150,7 +144,6 @@
         })
       },
       gotoFullScreen() {
-        console.log()
         var elem = this.$refs.mainVideo;
         if (elem.requestFullscreen) {
           elem.requestFullscreen();
@@ -164,16 +157,13 @@
           /* IE/Edge */
           elem.msRequestFullscreen();
         }
-
       }
     },
-    computed: {
-      valueVideo: function (newValueVideo) {
+    watch: {
+    computedValueVideo: function (newValueVideo) {
         this.dispatchAction(newValueVideo, 'videoinput');
       },
-      valueProgram: function (newValueVideo) {
-        this.dispatchAction(newValueVideo, 'videoinput')
-      }
+
     }
   }
 </script>

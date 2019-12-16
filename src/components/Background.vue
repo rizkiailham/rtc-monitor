@@ -1,39 +1,5 @@
 <template>
-	<input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
-</template>
-
-<script>
-import axios from 'axios'
-export default {
-	methods:{
-		uploadImage(event) {
-
-    const URL = 'http://localhost:3333/api/upload';
-
-    let data = new FormData();
-    data.append('name', 'background');
-    data.append('background', event.target.files[0]);
-
-    let config = {
-      header : {
-        'Content-Type' : 'image/png'
-      }
-    }
-
-    axios.post(
-      URL,
-      data,
-      config
-    ).then(
-      response => {
-        console.log(response)
-      }
-    )
-  }
-	}
-}
-</script>
-  <v-layout>
+<v-layout>
     <v-flex>
       <v-row xs12>
         <v-flex xs12>
@@ -84,10 +50,9 @@ export default {
                   <!-- Video player -->
                   <v-card-text class="background-image" :style="{ backgroundImage: `url('${backgroundImage}')` }">
                     <v-layout row wrap>
-                      <video ref="mainVideo" autoplay controls width="1800" height="700">
-                        <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
+                      <canvas class="ml-2" ref="c1" width="1580" height="700" style="z-index: -1;
+                      outline: black 2px solid; ">
+                      </canvas>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -104,17 +69,18 @@ export default {
           <div class="bg-list ml-8 align-center" v-for="(background, index) in backgrounds" :key="index"
             @click="setSelectedBackground(background)">
             <div class="image-background-item" :class="selectedBackgroundClass(background)">
-              <img :src="background" height="100" />
+              <img ref="bgImage" :src="background" height="100" width="177" />
             </div>
           </div>
         </div>
         <div class="d-flex">
           <v-layout align-center>
             <v-flex class="mr-12">
-              <v-btn color="primary">
+              <input type="file" accept="image/*" @change="uploadImage($event)"  ref="file" style="display: none">
+              <v-btn  :loading="isUpload" @click="$refs.file.click()" color="primary">
                 Upload File
               </v-btn>
-              <v-btn class="ml-3" color="primary">
+              <v-btn @mousedown="setActiveBackground()" class="ml-3" color="primary">
                 Set Background
               </v-btn>
             </v-flex>
@@ -127,9 +93,8 @@ export default {
     </v-footer>
   </v-layout>
 </template>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <script>
+  import axios from 'axios'
   import RTC from 'detectrtc'
   import Multiselect from 'vue-multiselect'
   export default {
@@ -138,8 +103,8 @@ export default {
     },
     data() {
       return {
+        isUpload:false,
         valueVideo: "",
-        valueProgram: "",
         audioOptions: [],
         videoOptions: [],
         programOptions: [],
@@ -150,39 +115,21 @@ export default {
           '/img/backgrounds/bg2.png',
           '/img/backgrounds/bg3.png',
           '/img/backgrounds/bg4.png',
+          'http://localhost:3333/uploads/CustomBackground.jpg'
         ],
         selectedBackground: null,
       }
     },
     created() {
-      this.dispatchAction(null, "videoinput");
     },
     methods: {
       openDrawer() {
-        console.log("drawer open")
-      },
-      dispatchAction(value, state) {
-        var that = this;
-        if (state === 'videoinput') {
-          console.log("hadir")
-          navigator.mediaDevices.getUserMedia({
-            video: true
-          }).then(function (stream) {
-            console.log("permission granted")
-            that.initDevices()
-          });
-        }
-      },
-      initDevices() {
-        let that = this;
-        RTC.load(function () {
-          RTC.MediaDevices.map(function (device) {
-            if (device.kind === "videoinput") {
-              that.videoOptions.push(device);
-              that.programOptions.push(device);
-            }
-          })
-        })
+        this.$notify({
+          group: 'foo',
+          type: 'success',
+          title: 'Upload Image Success',
+          text: 'image Has successfully uploaded'
+        });
       },
       gotoFullScreen() {
         console.log()
@@ -206,17 +153,64 @@ export default {
       selectedBackgroundClass(background) {
         return this.selectedBackground === background ? 'active' : '';
       },
+      setActiveBackground(){
+        if(this.selectedBackground === null ){
+          this.$notify({
+          group: 'foo',
+          type: 'error',
+          title: 'Error',
+          text: 'you have not selected background'
+        });
+        }else {
+          localStorage.setItem('backgroundConfig', this.selectedBackground)
+          this.$notify({
+            group: 'foo',
+            type: 'success',
+            title: 'Success',
+            text: 'successfully update background'
+          });
+        }
+
+      },
+      uploadImage(event) {
+        this.isUpload = true;
+        const URL = 'http://localhost:3333/api/upload';
+        let data = new FormData();
+        data.append('name', 'background');
+        data.append('background', event.target.files[0]);
+        let config = {
+          header : {
+            'Content-Type' : 'image/png'
+          }
+        }
+        axios.post(URL, data, config).then(response => {
+            this.isUpload = false;
+            this.$notify({
+              group: 'foo',
+              type: 'success',
+              title: 'Upload Image Success',
+              text: 'image Has successfully uploaded',
+              duration:3000
+            });
+            this.backgrounds[this.backgrounds.length -1] = response.data
+            this.$refs.bgImage[4].src = response.data
+
+          }
+        )
+      }
     },
     computed: {
-      valueVideo: function (newValueVideo) {
-        this.dispatchAction(newValueVideo, 'videoinput');
-      },
-      valueProgram: function (newValueVideo) {
-        this.dispatchAction(newValueVideo, 'videoinput')
-      },
       backgroundImage() {
         return this.selectedBackground;
-      }
+      },
+    },
+    watch:{
+      backgrounds :  {
+        deep: true,
+        handler(){
+          console.log("tesadas")
+        }
+        },
     }
   }
 </script>
