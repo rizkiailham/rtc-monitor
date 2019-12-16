@@ -29,12 +29,12 @@
                     <v-spacer />
                     <!-- 3 button -->
                     <v-toolbar-items>
-                      <v-btn class="btn active" to="/background" text @click="activeBtn = 'btn1'"
+                      <v-btn class="btn" to="/background" text @click="activeBtn = 'btn1'"
                         :class="{active: activeBtn === 'btn1'} ">
                         <v-icon>mdi-image</v-icon>
                         background
                       </v-btn>
-                      <v-btn class="btn" to="/video-input" text @click="activeBtn = 'btn2'"
+                      <v-btn class="btn active" to="/video-input" text @click="activeBtn = 'btn2'"
                         :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
                         Video Input
@@ -48,7 +48,7 @@
                   </v-toolbar>
                   <v-divider></v-divider>
                   <!-- Video player -->
-                  <v-card-text class="background-image" :style="{ backgroundImage: `url('${backgroundImage}')` }">
+                  <v-card-text>
                     <v-layout row wrap>
                       <video ref="mainVideo" autoplay controls width="1800" height="700">
                         <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
@@ -66,19 +66,25 @@
     <!-- footer -->
     <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
       <div class="d-flex full-width">
-        <div class="d-flex">
-          <div class="bg-list ml-8 align-center" v-for="(background, index) in backgrounds" :key="index"
-            @click="setSelectedBackground(background)">
-            <div class="image-background-item" :class="selectedBackgroundClass(background)">
-              <img :src="background" height="100" />
-            </div>
-          </div>
-        </div>
+        <v-layout align-center>
+        <v-flex xs4 ml-8>
+          <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
+            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
+            <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
+          </multiselect>
+          </v-flex>
+          <v-flex xs4 ml-8>
+           <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
+            placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">
+            <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
+          </multiselect>
+        </v-flex>
+        </v-layout>
         <div class="d-flex">
           <v-layout align-center>
             <v-flex class="mr-12">
               <v-btn color="primary">
-                Upload File
+                Set Program
               </v-btn>
               <v-btn class="ml-3" color="primary">
                 Set Background
@@ -111,13 +117,6 @@
         programOptions: [],
         detailsDebug: "",
         activeBtn: '',
-        backgrounds: [
-          '/img/backgrounds/bg1.png',
-          '/img/backgrounds/bg2.png',
-          '/img/backgrounds/bg3.png',
-          '/img/backgrounds/bg4.png',
-        ],
-        selectedBackground: null,
       }
     },
     created() {
@@ -165,13 +164,8 @@
           /* IE/Edge */
           elem.msRequestFullscreen();
         }
-      },
-      setSelectedBackground(background) {
-        this.selectedBackground = background;
-      },
-      selectedBackgroundClass(background) {
-        return this.selectedBackground === background ? 'active' : '';
-      },
+
+      }
     },
     computed: {
       valueVideo: function (newValueVideo) {
@@ -179,14 +173,11 @@
       },
       valueProgram: function (newValueVideo) {
         this.dispatchAction(newValueVideo, 'videoinput')
-      },
-      backgroundImage() {
-        return this.selectedBackground;
       }
     }
   }
 </script>
-<style lang="scss">
+<style>
   html {
     overflow-y: auto !important
   }
@@ -213,8 +204,8 @@
   }
 
   .btn-close {
-    height: 115px;
-    width: 115px;
+    height: 100px;
+    width: 100px;
     color: white;
     border: none;
     background-color: #1976D2 !important;
@@ -225,50 +216,5 @@
     text-decoration: none !important;
     display: flex;
     justify-content: center;
-  }
-
-  .bg-list {
-    height: 100px;
-    width: 180px;
-    color: white;
-    border: none;
-    background-color: white !important;
-    outline: none;
-    padding: 0px 0px;
-    margin: 7px;
-    cursor: pointer;
-    text-decoration: none !important;
-    display: flex;
-    justify-content: center;
-  }
-
-  .inline-item {
-    display: inline-block;
-  }
-
-  .d-flex {
-    display: flex;
-    justify-content: space-between;
-
-    &.full-width {
-      width: 100%;
-    }
-  }
-
-  .image-background-item {
-    padding-bottom: 0px;
-    margin-bottom: 0px;
-
-    &.active {
-      -webkit-box-shadow: 0 0 0 3px #1976D2;
-      box-shadow: 0 0 0 3px #1976D2;
-    }
-  }
-
-  .background-image {
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-position: center top;
-    background-attachment: fixed;
   }
 </style>

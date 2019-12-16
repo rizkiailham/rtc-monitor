@@ -13,8 +13,23 @@ const routes = [
   },
   {
     path: '/main',
-    name: 'hello',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Main.vue')
+    name: 'main',
+    component: () => import(/* webpackChunkName: "main" */ '../views/Main.vue')
+  },
+  {
+    path: '/background',
+    name: 'background',
+    component: () => import(/* webpackChunkName: "background" */ '../views/Background.vue')
+  },
+  {
+    path: '/video-input',
+    name: 'video-input',
+    component: () => import(/* webpackChunkName: "background" */ '../views/VideoInput.vue')
+  },
+  {
+    path: '/layout',
+    name: 'layout',
+    component: () => import(/* webpackChunkName: "background" */ '../views/Layout.vue')
   }
 ]
 
