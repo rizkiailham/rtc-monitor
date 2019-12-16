@@ -117,17 +117,14 @@
     },
     methods: {
       openDrawer() {
-        console.log("drawer open")
-        console.log(this.$store.state);
+        console.log((localStorage.getItem("layoutConfig")));
       },
       dispatchAction(value, state) {
         var that = this;
         if (state === 'videoinput') {
-          console.log("hadir")
           navigator.mediaDevices.getUserMedia({
             video: true
           }).then(function (stream) {
-            console.log("permission granted")
             that.initDevices()
           });
         }
@@ -145,7 +142,6 @@
       },
       gotoFullScreen() {
         var elem = this.$refs.c1;
-
         if (elem.requestFullscreen) {
           elem.requestFullscreen();
         } else if (elem.mozRequestFullScreen) {
@@ -164,7 +160,6 @@
       },
       startCapture(deviceId){
       clearInterval( videoInterval);
-      console.log(this.valueVideo)
       let c1 = this.$refs.c1
       c1.width  = 1920; // in pixels
       c1.height = 1080; // in pixels
@@ -183,12 +178,25 @@
         }).then((cameraStream)=> {
             mainSource.srcObject = cameraStream
             mainSource.play()
-            this.startDrawToVideo(ctx, mainSource, 20, 20, 1280, 720)
+            this.drawCustomLayout(ctx, mainSource)
           });
       } catch(err) {
         console.error("Error: " + err);
       }
     },
+    drawCustomLayout(ctx, mainSource){
+      let layoutConfig = localStorage.getItem('layoutConfig')
+      if (layoutConfig==="1") {
+        this.startDrawToVideo(ctx, mainSource, 50,50,1380,800)
+      } else if( layoutConfig==="2"){
+        this.startDrawToVideo(ctx, mainSource, 50,50,1380,800)
+      } else if( layoutConfig==="3"){
+        this.startDrawToVideo(ctx, mainSource, 500,50,1380,800)
+      } else if( layoutConfig==="4"){
+        this.startDrawToVideo(ctx, mainSource, 500,50,1380,800)
+      }
+    }
+    ,
     createVideo(className){
       this.HTMLVideoElement = function() {};
       var videoElem = document.createElement('video')
