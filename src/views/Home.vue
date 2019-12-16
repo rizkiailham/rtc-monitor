@@ -6,10 +6,16 @@
     <v-content>
       <v-container fluid>
       <v-row>
+        <v-btn to="/video-input" class="ml-4 pl-4" color="primary">
+          <v-icon class= "mr-2">mdi-launch </v-icon>
+          go to Background Stream
+        </v-btn>
+      </v-row>
+      <v-row>
         <v-col>
         <div class="inputSelect">
           <div>
-            <label class="typo__label">Select Video Input Device</label>
+            <label class="typo__label">Select video input device to monitor final preview</label>
             <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
               placeholder="Select one" :options="videoOptions" :searchable="true" :allow-empty="false" >
               <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>

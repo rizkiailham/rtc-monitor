@@ -68,8 +68,8 @@
         <v-layout align-center>
         <v-flex xs4 ml-8>
           <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false" >
-            <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
+            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false"  @select="onSelect">
+            <template slot="singleLabel" slot-scope="{ option }" ><strong>{{ option.label }}</strong></template>
           </multiselect>
           </v-flex>
         </v-layout>
@@ -95,6 +95,7 @@
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <script>
+  let videoInterval= null;
   import RTC from 'detectrtc'
   import Multiselect from 'vue-multiselect'
   export default {
@@ -158,7 +159,12 @@
           elem.msRequestFullscreen();
         }
       },
+      onSelect(device){
+        this.startCapture(device.deviceId)
+      },
       startCapture(deviceId){
+      clearInterval( videoInterval);
+      console.log(this.valueVideo)
       let c1 = this.$refs.c1
       c1.width  = 1920; // in pixels
       c1.height = 1080; // in pixels
@@ -195,7 +201,7 @@
     },
     startDrawToVideo(ctx,videoElem,x,y,w,h){
       // ctx.drawImage(videoElem,5,5,260,125)
-      var i = window.setInterval(function() {
+      videoInterval = window.setInterval(function() {
         ctx.drawImage(videoElem,x,y,w,h)
       },1)
     },
@@ -206,12 +212,11 @@
       videoElem.srcObject = null;
     },
     },
-    watch: {
-      valueVideo (newValueVideo) {
-        this.startCapture(newValueVideo.deviceId)
-      },
-
-    }
+    // watch: {
+    //   valueVideo (newValueVideo) {
+    //     this.startCapture(newValueVideo.deviceId)
+    //   },
+    // }
   }
 </script>
 <style>
