@@ -1,10 +1,10 @@
 <template>
-<v-layout>
+  <v-layout>
     <v-flex>
       <v-row xs12>
         <v-flex xs12>
           <!-- header -->
-          <v-card class="white--text" height="130" tile flat color="primary">
+          <v-card class="white--text" height="132" tile flat color="primary">
             <v-layout row wrap align-center pt-5 ml-10 mr-5>
               <img :src="require('../assets/rtc-logo.png')" height="60" />
               <v-spacer></v-spacer>
@@ -31,18 +31,18 @@
                     <v-toolbar-items>
                       <v-btn class="btn active" to="/background" text @click="activeBtn = 'btn1'"
                         :class="{active: activeBtn === 'btn1'} ">
-                        <v-icon>mdi-image</v-icon>
-                        background
+                        <v-icon class="icon">mdi-image</v-icon>
+                        <div class="text-icon">background</div>
                       </v-btn>
                       <v-btn class="btn" to="/video-input" text @click="activeBtn = 'btn2'"
                         :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
-                        Video Input
+                        <div class="text-icon">Video Input</div>
                       </v-btn>
                       <v-btn class="btn" to="/layout" text @click="activeBtn = 'btn3'"
                         :class="{active: activeBtn === 'btn3' }">
                         <v-icon>mdi-texture-box</v-icon>
-                        layout
+                        <div class="text-icon">layout</div>
                       </v-btn>
                     </v-toolbar-items>
                   </v-toolbar>
@@ -63,21 +63,25 @@
       </v-row>
     </v-flex>
     <!-- footer -->
-    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
+    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="110" app>
       <div class="d-flex full-width">
-        <div class="d-flex">
-          <div class="bg-list ml-8 align-center" v-for="(background, index) in backgrounds" :key="index"
-            @click="setSelectedBackground(background)">
-            <div class="image-background-item" :class="selectedBackgroundClass(background)">
-              <img ref="bgImage" :src="background" height="100" width="177" />
+        <div class="wrapper">
+          <div class="scrolls">
+            <div class="d-flex">
+              <div class="bg-list ml-5" v-for="(background, index) in backgrounds" :key="index"
+                @click="setSelectedBackground(background)">
+                <div class="image-background-item" :class="selectedBackgroundClass(background)">
+                  <img ref="bgImage" :src="background" height="80" width="177" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="d-flex">
           <v-layout align-center>
             <v-flex class="mr-12">
-              <input type="file" accept="image/*" @change="uploadImage($event)"  ref="file" style="display: none">
-              <v-btn  :loading="isUpload" @click="$refs.file.click()" color="primary">
+              <input type="file" accept="image/*" @change="uploadImage($event)" ref="file" style="display: none">
+              <v-btn :loading="isUpload" @click="$refs.file.click()" color="primary">
                 Upload File
               </v-btn>
               <v-btn @mousedown="setActiveBackground()" class="ml-3" color="primary">
@@ -103,7 +107,7 @@
     },
     data() {
       return {
-        isUpload:false,
+        isUpload: false,
         valueVideo: "",
         audioOptions: [],
         videoOptions: [],
@@ -111,17 +115,22 @@
         detailsDebug: "",
         activeBtn: '',
         backgrounds: [
-          '/img/backgrounds/bg1.png',
-          '/img/backgrounds/bg2.png',
-          '/img/backgrounds/bg3.png',
-          '/img/backgrounds/bg4.png',
+          '/img/backgrounds/bg1.jpg',
+          '/img/backgrounds/bg2.jpg',
+          '/img/backgrounds/bg3.jpg',
+          '/img/backgrounds/bg4.jpg',
+          '/img/backgrounds/bg5.jpg',
+          '/img/backgrounds/bg6.jpg',
+          '/img/backgrounds/bg7.jpg',
+          '/img/backgrounds/bg8.jpg',
+          '/img/backgrounds/bg9.jpg',
+          '/img/backgrounds/bg10.jpg',
           'https://rtc.ajak.in/uploads/CustomBackground.jpg'
         ],
         selectedBackground: null,
       }
     },
-    created() {
-    },
+    created() {},
     methods: {
       openDrawer() {
         this.$notify({
@@ -153,14 +162,14 @@
       selectedBackgroundClass(background) {
         return this.selectedBackground === background ? 'active' : '';
       },
-      setActiveBackground(){
-        if (this.selectedBackground === null ) {
+      setActiveBackground() {
+        if (this.selectedBackground === null) {
           this.$notify({
-          group: 'foo',
-          type: 'error',
-          title: 'Error',
-          text: 'you have not selected background'
-        });
+            group: 'foo',
+            type: 'error',
+            title: 'Error',
+            text: 'you have not selected background'
+          });
         } else {
           localStorage.setItem('backgroundConfig', this.selectedBackground)
           this.$notify({
@@ -179,24 +188,23 @@
         data.append('name', 'background');
         data.append('background', event.target.files[0]);
         let config = {
-          header : {
-            'Content-Type' : 'image/png'
+          header: {
+            'Content-Type': 'image/png'
           }
         }
         axios.post(URL, data, config).then(response => {
-            this.isUpload = false;
-            this.$notify({
-              group: 'foo',
-              type: 'success',
-              title: 'Upload Image Success',
-              text: 'image Has successfully uploaded',
-              duration:3000
-            });
-            this.backgrounds[this.backgrounds.length -1] = response.data
-            this.$refs.bgImage[4].src = response.data
+          this.isUpload = false;
+          this.$notify({
+            group: 'foo',
+            type: 'success',
+            title: 'Upload Image Success',
+            text: 'image Has successfully uploaded',
+            duration: 3000
+          });
+          this.backgrounds[this.backgrounds.length - 1] = response.data
+          this.$refs.bgImage[4].src = response.data
 
-          }
-        )
+        })
       }
     },
     computed: {
@@ -204,15 +212,16 @@
         return this.selectedBackground;
       },
     },
-    watch:{
-      backgrounds :  {
+    watch: {
+      backgrounds: {
         deep: true,
-        handler(){
+        handler() {
           console.log("tesadas")
         }
-        },
+      },
     }
   }
+
 </script>
 <style lang="scss">
   html {
@@ -256,7 +265,7 @@
   }
 
   .bg-list {
-    height: 100px;
+    height: 81px;
     width: 180px;
     color: white;
     border: none;
@@ -299,4 +308,42 @@
     background-position: center top;
     background-attachment: fixed;
   }
+
+  .text-icon {
+    margin-left: 10px;
+  }
+
+  .wrapper {
+    background: white;
+    // box-shadow: 1px 1px 3px #999;
+    margin-left: 50px;
+    text-align: center;
+    position: relative;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    // margin-bottom: 20px !important;
+    width: 900px;
+    // padding-top: 5px;
+    height: 110px;
+  }
+
+  .scrolls {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 110px;
+    white-space: nowrap
+  }
+
+  .imageDiv img {
+    box-shadow: 1px 1px 10px #999;
+    margin: 2px;
+    max-height: 50px;
+    cursor: pointer;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: top;
+  }
+
 </style>

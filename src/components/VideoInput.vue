@@ -4,7 +4,7 @@
       <v-row xs12>
         <v-flex xs12>
           <!-- header -->
-          <v-card class="white--text" height="130" tile flat color="primary">
+          <v-card class="white--text" height="132" tile flat color="primary">
             <v-layout row wrap align-center pt-5 ml-10 mr-5>
               <img :src="require('../assets/rtc-logo.png')" height="60" />
               <v-spacer></v-spacer>
@@ -31,18 +31,18 @@
                     <v-toolbar-items>
                       <v-btn class="btn" to="/background" text @click="activeBtn = 'btn1'"
                         :class="{active: activeBtn === 'btn1'} ">
-                        <v-icon>mdi-image</v-icon>
-                        background
+                        <v-icon class="icon">mdi-image</v-icon>
+                        <div class="text-icon">background</div>
                       </v-btn>
                       <v-btn class="btn active" to="/video-input" text @click="activeBtn = 'btn2'"
                         :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
-                        Video Input
+                        <div class="text-icon">Video Input</div>
                       </v-btn>
                       <v-btn class="btn" to="/layout" text @click="activeBtn = 'btn3'"
                         :class="{active: activeBtn === 'btn3' }">
                         <v-icon>mdi-texture-box</v-icon>
-                        layout
+                        <div class="text-icon">layout</div>
                       </v-btn>
                     </v-toolbar-items>
                   </v-toolbar>
@@ -63,7 +63,7 @@
       </v-row>
     </v-flex>
     <!-- footer -->
-    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
+    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="110" app>
       <div class="d-flex full-width">
         <v-layout align-center>
         <v-flex xs4 ml-8>
@@ -254,8 +254,8 @@
   }
 
   .btn-close {
-    height: 100px;
-    width: 100px;
+    height: 115px;
+    width: 115px;
     color: white;
     border: none;
     background-color: #1976D2 !important;
@@ -266,5 +266,9 @@
     text-decoration: none !important;
     display: flex;
     justify-content: center;
+  }
+
+  .text-icon{
+    margin-left: 10px;
   }
 </style>
