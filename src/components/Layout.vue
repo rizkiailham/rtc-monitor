@@ -4,7 +4,7 @@
       <v-row xs12>
         <v-flex xs12>
           <!-- header -->
-          <v-card class="white--text" height="130" tile flat color="primary">
+          <v-card class="white--text" height="132" tile flat color="primary">
             <v-layout row wrap align-center pt-5 ml-10 mr-5>
               <img :src="require('../assets/rtc-logo.png')" height="60" />
               <v-spacer></v-spacer>

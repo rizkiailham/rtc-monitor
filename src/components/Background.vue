@@ -4,7 +4,7 @@
       <v-row xs12>
         <v-flex xs12>
           <!-- header -->
-          <v-card class="white--text" height="130" tile flat color="primary">
+          <v-card class="white--text" height="132" tile flat color="primary">
             <v-layout row wrap align-center pt-5 ml-10 mr-5>
               <img :src="require('../assets/rtc-logo.png')" height="60" />
               <v-spacer></v-spacer>
@@ -90,6 +90,7 @@
           </div>
         </div>
       </div>
+
     </v-footer>
   </v-layout>
 </template>
@@ -111,10 +112,10 @@
         detailsDebug: "",
         activeBtn: '',
         backgrounds: [
-          '/img/backgrounds/bg1.png',
-          '/img/backgrounds/bg2.png',
-          '/img/backgrounds/bg3.png',
-          '/img/backgrounds/bg4.png',
+          '/img/backgrounds/bg1.jpg',
+          '/img/backgrounds/bg2.jpg',
+          '/img/backgrounds/bg3.jpg',
+          '/img/backgrounds/bg4.jpg',
           'https://rtc.ajak.in/uploads/CustomBackground.jpg'
         ],
         selectedBackground: null,
