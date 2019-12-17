@@ -161,7 +161,7 @@
           localStorage.setItem("layoutConfig", "1");
           this.$notify({
             group: 'foo',
-            type: 'Success',
+            type: 'success',
             title: 'Success',
             text: 'Layout 1 selected'
           });
@@ -169,7 +169,7 @@
           localStorage.setItem("layoutConfig", "2");
           this.$notify({
             group: 'foo',
-            type: 'Success',
+            type: 'success',
             title: 'Success',
             text: 'Layout 2 selected'
           });
@@ -177,7 +177,7 @@
           localStorage.setItem("layoutConfig", "3");
           this.$notify({
             group: 'foo',
-            type: 'Success',
+            type: 'success',
             title: 'Success',
             text: 'Layout 3 selected'
           });
@@ -185,7 +185,7 @@
           localStorage.setItem("layoutConfig", "4");
           this.$notify({
             group: 'foo',
-            type: 'Success',
+            type: 'success',
             title: 'Success',
             text: 'Layout 4 selected'
           });
