@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <notifications group="foo" />
     <router-view></router-view>
   </v-app>
 </template>

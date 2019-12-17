@@ -1,38 +1,29 @@
 'use strict'
-
-/*
-|--------------------------------------------------------------------------
-| Routes
-|--------------------------------------------------------------------------
-|
-| Http routes are entry points to your web application. You can create
-| routes for different URL's and bind Controller actions to them.
-|
-| A complete guide on routing is available here.
-| http://adonisjs.com/docs/4.1/routing
-|
-*/
-
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 const Helpers = use('Helpers')
 
-Route.on('/api/').render('welcome')
-  Route.post('/api/upload', async ({
-    request
-  }) => {
-  const backgroundPic = request.file('background', {
-    types: ['image'],
-    size: '24mb'
-  })
+Route.on('/api/').render('welcome');
 
-  await backgroundPic.move(Helpers.tmpPath('uploads'), {
-    name: 'CustomBackground.jpg',
-    overwrite: true
-  })
+Route.post('/api/upload/', async ({ request }) => {
+  try{
+    const backgroundPic = request.file('background', {
+      types: ['image'],
+      size: '24mb'
+    })
+    await backgroundPic.move(Helpers.publicPath('uploads'), {
+      name: 'CustomBackground.jpg',
+      overwrite: true
+    })
 
-  if (!backgroundPic.moved()) {
-    return backgroundPic.error()
+    if (!backgroundPic.moved()) {
+      return backgroundPic.error()
+    }
+    return "https://rtc.ajak.in/uploads/CustomBackground.jpg?t="+ Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10) ;
+  }catch(e){
+    console.log(e)
   }
-  return 'File moved'
-})
+});
+
+
+

@@ -50,10 +50,9 @@
                   <!-- Video player -->
                   <v-card-text>
                     <v-layout row wrap>
-                      <video ref="mainVideo" autoplay controls width="1800" height="700">
-                        <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
+                      <canvas class="ml-2" ref="c1" width="1580" height="700" style="z-index: 0;
+                      outline: black 2px solid; ">
+                      </canvas>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -67,6 +66,7 @@
     <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
       <div class="d-flex full-width">
         <v-layout align-center>
+<<<<<<< HEAD
           <v-flex xs4 ml-8>
             <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
               placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
@@ -79,6 +79,14 @@
               <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
             </multiselect>
           </v-flex>
+=======
+        <v-flex xs4 ml-8>
+          <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
+            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false"  @select="onSelect">
+            <template slot="singleLabel" slot-scope="{ option }" ><strong>{{ option.label }}</strong></template>
+          </multiselect>
+          </v-flex>
+>>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8
         </v-layout>
         <div class="d-flex">
           <v-layout align-center>
@@ -102,6 +110,7 @@
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <script>
+  let videoInterval= null;
   import RTC from 'detectrtc'
   import Multiselect from 'vue-multiselect'
   export default {
@@ -111,7 +120,6 @@
     data() {
       return {
         valueVideo: "",
-        valueProgram: "",
         audioOptions: [],
         videoOptions: [],
         programOptions: [],
@@ -124,16 +132,14 @@
     },
     methods: {
       openDrawer() {
-        console.log("drawer open")
+        console.log((localStorage.getItem("layoutConfig")));
       },
       dispatchAction(value, state) {
         var that = this;
         if (state === 'videoinput') {
-          console.log("hadir")
           navigator.mediaDevices.getUserMedia({
             video: true
           }).then(function (stream) {
-            console.log("permission granted")
             that.initDevices()
           });
         }
@@ -150,8 +156,7 @@
         })
       },
       gotoFullScreen() {
-        console.log()
-        var elem = this.$refs.mainVideo;
+        var elem = this.$refs.c1;
         if (elem.requestFullscreen) {
           elem.requestFullscreen();
         } else if (elem.mozRequestFullScreen) {
@@ -164,17 +169,77 @@
           /* IE/Edge */
           elem.msRequestFullscreen();
         }
-
+      },
+      onSelect(device){
+        this.startCapture(device.deviceId)
+      },
+      startCapture(deviceId){
+      clearInterval( videoInterval);
+      let c1 = this.$refs.c1
+      c1.width  = 1920; // in pixels
+      c1.height = 1080; // in pixels
+      let ctx = c1.getContext("2d");
+      let base_image = new Image();
+      base_image.onload = function(){
+        ctx.drawImage(base_image, 0, 0);
+      }
+        base_image.src = localStorage.getItem('backgroundConfig');
+      var mainSource = this.createVideo("mainSouce")
+      try {
+          navigator.mediaDevices.getUserMedia({
+            video: {
+              deviceId: { exact: deviceId },
+            },
+        }).then((cameraStream)=> {
+            mainSource.srcObject = cameraStream
+            mainSource.play()
+            this.drawCustomLayout(ctx, mainSource)
+          });
+      } catch(err) {
+        console.error("Error: " + err);
       }
     },
-    computed: {
-      valueVideo: function (newValueVideo) {
-        this.dispatchAction(newValueVideo, 'videoinput');
-      },
-      valueProgram: function (newValueVideo) {
-        this.dispatchAction(newValueVideo, 'videoinput')
+    drawCustomLayout(ctx, mainSource){
+      let layoutConfig = localStorage.getItem('layoutConfig')
+      if (layoutConfig==="1") {
+        this.startDrawToVideo(ctx, mainSource, 50,50,1380,800)
+      } else if( layoutConfig==="2"){
+        this.startDrawToVideo(ctx, mainSource, 50,50,1380,800)
+      } else if( layoutConfig==="3"){
+        this.startDrawToVideo(ctx, mainSource, 500,50,1380,800)
+      } else if( layoutConfig==="4"){
+        this.startDrawToVideo(ctx, mainSource, 500,50,1380,800)
       }
     }
+    ,
+    createVideo(className){
+      this.HTMLVideoElement = function() {};
+      var videoElem = document.createElement('video')
+          videoElem.className =  className;
+          videoElem.muted = true;
+          videoElem.volume = 0;
+          videoElem.width =  1280;
+          videoElem.height =  720;
+      return videoElem;
+    },
+    startDrawToVideo(ctx,videoElem,x,y,w,h){
+      // ctx.drawImage(videoElem,5,5,260,125)
+      videoInterval = window.setInterval(function() {
+        ctx.drawImage(videoElem,x,y,w,h)
+      },1)
+    },
+    stopCapture(){
+      var videoElem = this.$refs.mainVid
+      let tracks = videoElem.srcObject.getTracks();
+      tracks.forEach(track => track.stop());
+      videoElem.srcObject = null;
+    },
+    },
+    // watch: {
+    //   valueVideo (newValueVideo) {
+    //     this.startCapture(newValueVideo.deviceId)
+    //   },
+    // }
   }
 </script>
 <style>
@@ -217,8 +282,12 @@
     display: flex;
     justify-content: center;
   }
+<<<<<<< HEAD
 
   .text-icon{
     margin-left: 10px;
   }
 </style>
+=======
+</style>
+>>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8

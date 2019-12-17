@@ -6,10 +6,16 @@
     <v-content>
       <v-container fluid>
       <v-row>
+        <v-btn to="/video-input" class="ml-4 pl-4" color="primary">
+          <v-icon class= "mr-2">mdi-launch </v-icon>
+          go to Background Stream
+        </v-btn>
+      </v-row>
+      <v-row>
         <v-col>
         <div class="inputSelect">
           <div>
-            <label class="typo__label">Select Video Input Device</label>
+            <label class="typo__label">Select video input device to monitor final preview</label>
             <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
               placeholder="Select one" :options="videoOptions" :searchable="true" :allow-empty="false" >
               <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
@@ -18,7 +24,7 @@
         </div>
         </v-col>
       </v-row>
-      <v-row     align="center" justify="center">  
+      <v-row     align="center" justify="center">
           <video class="text-center" width="1280" height="700" autoplay playsinline style="border-radius: 3px; max-width: 60%;margin: 10px;" ref="videoInput"></video>
       </v-row>
       </v-container>
@@ -109,12 +115,12 @@ export default {
           });
             await audio.setSinkId(value.deviceId);
             console.log('Audio is being played on ' + audio.sinkId);
-          
+
         } catch(e){
           alert("something error in your device");
           console.log(e);
         }
-      } 
+      }
     }
   }
 
