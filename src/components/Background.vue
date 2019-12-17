@@ -115,7 +115,7 @@
           '/img/backgrounds/bg2.png',
           '/img/backgrounds/bg3.png',
           '/img/backgrounds/bg4.png',
-          'http://localhost:3333/uploads/CustomBackground.jpg'
+          'https://rtc.ajak.in/uploads/CustomBackground.jpg'
         ],
         selectedBackground: null,
       }
@@ -174,7 +174,7 @@
       },
       uploadImage(event) {
         this.isUpload = true;
-        const URL = 'http://localhost:3333/api/upload';
+        const URL = 'https://rtc.ajak.in/api/upload';
         let data = new FormData();
         data.append('name', 'background');
         data.append('background', event.target.files[0]);

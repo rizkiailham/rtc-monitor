@@ -156,6 +156,7 @@
       },
       setLayout(){
         let swtichLayout = this.selectedLayout.substr(this.selectedLayout.length-11);
+        // console.log(localStorage.getItem('layoutConfig'))
         if (swtichLayout === "layout1.png") {
           localStorage.setItem("layoutConfig", "1");
           this.$notify({
