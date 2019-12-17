@@ -174,7 +174,7 @@
       },
       uploadImage(event) {
         this.isUpload = true;
-        const URL = 'https://rtc.ajak.in/api/upload';
+        const URL = 'https://rtc.ajak.in/api/api/upload';
         let data = new FormData();
         data.append('name', 'background');
         data.append('background', event.target.files[0]);
