@@ -299,12 +299,9 @@
     background-position: center top;
     background-attachment: fixed;
   }
-<<<<<<< HEAD
 
   .text-icon{
     margin-left: 10px;
   }
 </style>
-=======
 </style>
->>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8

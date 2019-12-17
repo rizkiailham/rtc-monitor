@@ -66,27 +66,12 @@
     <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
       <div class="d-flex full-width">
         <v-layout align-center>
-<<<<<<< HEAD
-          <v-flex xs4 ml-8>
-            <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
-              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-            </multiselect>
-          </v-flex>
-          <v-flex xs4 ml-8>
-            <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
-              placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">
-              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-            </multiselect>
-          </v-flex>
-=======
         <v-flex xs4 ml-8>
           <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
             placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false"  @select="onSelect">
             <template slot="singleLabel" slot-scope="{ option }" ><strong>{{ option.label }}</strong></template>
           </multiselect>
           </v-flex>
->>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8
         </v-layout>
         <div class="d-flex">
           <v-layout align-center>
@@ -282,12 +267,8 @@
     display: flex;
     justify-content: center;
   }
-<<<<<<< HEAD
 
   .text-icon{
     margin-left: 10px;
   }
 </style>
-=======
-</style>
->>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8

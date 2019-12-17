@@ -1,69 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <v-layout>
-        <v-flex>
-            <v-row xs12>
-                <v-flex xs12>
-                    <!-- header -->
-                    <v-card class="white--text" height="130" tile flat color="primary">
-                        <v-layout row wrap align-center pt-5 ml-10 mr-5>
-                            <img :src="require('../assets/rtc-logo.png')" height="60" />
-                            <v-spacer></v-spacer>
-                            Erik olsvik
-                            <v-avatar @mousedown="openDrawer()" color="primary">
-                                <v-icon dark>mdi-account-circle</v-icon>
-                            </v-avatar>
-                        </v-layout>
-                        <!-- content -->
-                        <v-row align="center" justify="center">
-                            <v-col sm="10" md="10" style="margin-top:-25px;">
-                                <v-card class="elevation-4 ">
-                                    <v-toolbar flat align="left">
-                                        <v-toolbar-title class="mr-4 ml-4 headline black--text">Preview
-                                        </v-toolbar-title>
-                                        <v-toolbar-items>
-                                            <v-btn @mousedown="gotoFullScreen()" text
-                                                class="text-capitalize primary--text">
-                                                <v-icon>mdi-fullscreen</v-icon>
-                                                Fullscreen
-                                            </v-btn>
-                                        </v-toolbar-items>
-                                        <v-spacer />
-                                        <!-- 3 button -->
-                                        <v-toolbar-items>
-                                            <v-btn class="btn" to="/background" text @click="activeBtn = 'btn1'"
-                                                :class="{active: activeBtn === 'btn1'} ">
-                                                <v-icon class="icon">mdi-image</v-icon>
-                                                <div class="text-icon">background</div>
-                                            </v-btn>
-                                            <v-btn class="btn" to="/video-input" text @click="activeBtn = 'btn2'"
-                                                :class="{active: activeBtn === 'btn2' }">
-                                                <v-icon>mdi-video</v-icon>
-                                                <div class="text-icon">Video Input</div>
-                                            </v-btn>
-                                            <v-btn class="btn active" to="/layout" text @click="activeBtn = 'btn3'"
-                                                :class="{active: activeBtn === 'btn3' }">
-                                                <v-icon>mdi-texture-box</v-icon>
-                                                <div class="text-icon">layout</div>
-                                            </v-btn>
-                                        </v-toolbar-items>
-                                    </v-toolbar>
-                                    <v-divider></v-divider>
-                                    <!-- Video player -->
-                                    <v-card-text>
-                                        <v-layout row wrap>
-                                            <video ref="mainVideo" autoplay controls width="1800" height="700">
-                                                <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        </v-layout>
-                                    </v-card-text>
-                                </v-card>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-flex>
-=======
   <v-layout>
     <v-flex>
       <v-row xs12>
@@ -122,7 +57,6 @@
                   </v-card-text>
                 </v-card>
               </v-col>
->>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8
             </v-row>
           </v-card>
         </v-flex>
@@ -356,7 +290,6 @@
     }
   }
 
-<<<<<<< HEAD
     .background-layout {
         background-repeat: no-repeat;
         background-size: 100% auto;
@@ -368,13 +301,3 @@
     margin-left: 10px;
   }
 </style>
-=======
-  .background-layout {
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-position: center top;
-    background-attachment: fixed;
-  }
-
-</style>
->>>>>>> 91e24ad0bdf5b4b2d1b01ba4e7ae23c7f1ae8df8
