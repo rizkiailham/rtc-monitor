@@ -76,11 +76,11 @@
         <div class="d-flex">
           <v-layout align-center>
             <v-flex class="mr-12">
-              <v-btn color="primary">
-                Set Program
-              </v-btn>
-              <v-btn class="ml-3" color="primary">
+              <v-btn to="/background" color="primary">
                 Set Background
+              </v-btn>
+              <v-btn to="/layout" class="ml-3" color="primary">
+                Set Layout
               </v-btn>
             </v-flex>
           </v-layout>

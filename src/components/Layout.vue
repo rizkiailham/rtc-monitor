@@ -37,7 +37,6 @@
                       <v-btn class="btn" to="/video-input" text @click="activeBtn = 'btn2'"
                         :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
-                        <
                         <div class="text-icon">Video Input</div>
                       </v-btn>
                       <v-btn class="btn active" to="/layout" text @click="activeBtn = 'btn3'"
