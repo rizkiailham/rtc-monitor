@@ -31,18 +31,18 @@
                     <v-toolbar-items>
                       <v-btn class="btn active" to="/background" text @click="activeBtn = 'btn1'"
                         :class="{active: activeBtn === 'btn1'} ">
-                        <v-icon>mdi-image</v-icon>
-                        background
+                        <v-icon class="icon">mdi-image</v-icon>
+                        <div class="text-icon">background</div>
                       </v-btn>
                       <v-btn class="btn" to="/video-input" text @click="activeBtn = 'btn2'"
                         :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
-                        Video Input
+                        <div class="text-icon">Video Input</div>
                       </v-btn>
                       <v-btn class="btn" to="/layout" text @click="activeBtn = 'btn3'"
                         :class="{active: activeBtn === 'btn3' }">
                         <v-icon>mdi-texture-box</v-icon>
-                        layout
+                        <div class="text-icon">layout</div>
                       </v-btn>
                     </v-toolbar-items>
                   </v-toolbar>
@@ -270,5 +270,9 @@
     background-size: 100% auto;
     background-position: center top;
     background-attachment: fixed;
+  }
+
+  .text-icon{
+    margin-left: 10px;
   }
 </style>

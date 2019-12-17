@@ -31,18 +31,18 @@
                     <v-toolbar-items>
                       <v-btn class="btn" to="/background" text @click="activeBtn = 'btn1'"
                         :class="{active: activeBtn === 'btn1'} ">
-                        <v-icon>mdi-image</v-icon>
-                        background
+                        <v-icon class="icon">mdi-image</v-icon>
+                        <div class="text-icon">background</div>
                       </v-btn>
                       <v-btn class="btn active" to="/video-input" text @click="activeBtn = 'btn2'"
                         :class="{active: activeBtn === 'btn2' }">
                         <v-icon>mdi-video</v-icon>
-                        Video Input
+                        <div class="text-icon">Video Input</div>
                       </v-btn>
                       <v-btn class="btn" to="/layout" text @click="activeBtn = 'btn3'"
                         :class="{active: activeBtn === 'btn3' }">
                         <v-icon>mdi-texture-box</v-icon>
-                        layout
+                        <div class="text-icon">layout</div>
                       </v-btn>
                     </v-toolbar-items>
                   </v-toolbar>
@@ -67,18 +67,18 @@
     <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
       <div class="d-flex full-width">
         <v-layout align-center>
-        <v-flex xs4 ml-8>
-          <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
-            placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
-            <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-          </multiselect>
+          <v-flex xs4 ml-8>
+            <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
+              placeholder="Select Background Source" :options="videoOptions" :searchable="true" :allow-empty="false">
+              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
+            </multiselect>
           </v-flex>
           <v-flex xs4 ml-8>
-           <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
-            placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">
-            <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
-          </multiselect>
-        </v-flex>
+            <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
+              placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">
+              <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
+            </multiselect>
+          </v-flex>
         </v-layout>
         <div class="d-flex">
           <v-layout align-center>
@@ -216,5 +216,9 @@
     text-decoration: none !important;
     display: flex;
     justify-content: center;
+  }
+
+  .text-icon{
+    margin-left: 10px;
   }
 </style>
