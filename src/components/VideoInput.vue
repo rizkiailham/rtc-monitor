@@ -63,7 +63,7 @@
       </v-row>
     </v-flex>
     <!-- footer -->
-    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="108" app>
+    <v-footer class="elevation-3 pt-0 pr-0 pl-0 pb-0" color="white" height="110" app>
       <div class="d-flex full-width">
         <v-layout align-center>
         <v-flex xs4 ml-8>
