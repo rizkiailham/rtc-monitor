@@ -158,14 +158,44 @@
         let swtichLayout = this.selectedLayout.substr(this.selectedLayout.length-11);
         if (swtichLayout === "layout1.png") {
           localStorage.setItem("layoutConfig", "1");
+          this.$notify({
+            group: 'foo',
+            type: 'Success',
+            title: 'Success',
+            text: 'Layout 1 selected'
+          });
         } else if (swtichLayout === "layout2.png") {
           localStorage.setItem("layoutConfig", "2");
+          this.$notify({
+            group: 'foo',
+            type: 'Success',
+            title: 'Success',
+            text: 'Layout 2 selected'
+          });
         } else if (swtichLayout === "layout3.png") {
           localStorage.setItem("layoutConfig", "3");
+          this.$notify({
+            group: 'foo',
+            type: 'Success',
+            title: 'Success',
+            text: 'Layout 3 selected'
+          });
         } else if (swtichLayout === "layout4.png") {
           localStorage.setItem("layoutConfig", "4");
+          this.$notify({
+            group: 'foo',
+            type: 'Success',
+            title: 'Success',
+            text: 'Layout 4 selected'
+          });
         } else {
           alert("you have not selected layout");
+          this.$notify({
+            group: 'foo',
+            type: 'error',
+            title: 'error',
+            text: 'you have not selected layout'
+          });
         }
       },
       selectedLayoutClass(layout) {

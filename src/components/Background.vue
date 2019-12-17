@@ -154,14 +154,14 @@
         return this.selectedBackground === background ? 'active' : '';
       },
       setActiveBackground(){
-        if(this.selectedBackground === null ){
+        if (this.selectedBackground === null ) {
           this.$notify({
           group: 'foo',
           type: 'error',
           title: 'Error',
           text: 'you have not selected background'
         });
-        }else {
+        } else {
           localStorage.setItem('backgroundConfig', this.selectedBackground)
           this.$notify({
             group: 'foo',
