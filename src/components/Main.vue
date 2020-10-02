@@ -68,6 +68,7 @@
             <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
           </multiselect>
         </v-flex>
+        <!-- Selecting Video Input -->
         <v-flex class="pl-4 ml-4" xs3>
           <multiselect v-model="valueProgram" deselect-label="Can't remove this value" track-by="label" label="label"
             placeholder="Select Program" :options="programOptions" :searchable="true" :allow-empty="false">

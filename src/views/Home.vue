@@ -16,6 +16,7 @@
         <div class="inputSelect">
           <div>
             <label class="typo__label">Select video input device to monitor final preview</label>
+            <!-- selecting video input -->
             <multiselect v-model="valueVideo" deselect-label="Can't remove this value" track-by="label" label="label"
               placeholder="Select one" :options="videoOptions" :searchable="true" :allow-empty="false" >
               <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.label }}</strong></template>
